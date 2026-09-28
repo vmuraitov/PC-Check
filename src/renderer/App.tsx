@@ -10,6 +10,7 @@ import { Manual } from './pages/Manual'
 import { Utilities } from './pages/Utilities'
 import { Settings } from './pages/Settings'
 import { LatestFiles } from './pages/LatestFiles'
+import { UnturnedLaunches } from './pages/UnturnedLaunches'
 import { ErrorBoundary } from './components/ErrorBoundary'
 import { useSettingsStore } from './stores/settings-store'
 import './i18n'
@@ -68,6 +69,7 @@ export function App() {
                 <Route path="/utilities" element={<Utilities />} />
                 <Route path="/settings" element={<Settings />} />
                 <Route path="/latest-files" element={<LatestFiles />} />
+                <Route path="/unturned-launches" element={<UnturnedLaunches />} />
               </Routes>
             </main>
           </div>

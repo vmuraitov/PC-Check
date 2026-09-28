@@ -17,6 +17,7 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:latest-files": "node --experimental-strip-types --test scripts/test-latest-files.mjs scripts/test-latest-files-store.mjs",
+    "test:unturned-launches": "node --experimental-strip-types --test scripts/test-unturned-launches.mjs",
     "test:watch": "vitest"
   },
   "dependencies": {

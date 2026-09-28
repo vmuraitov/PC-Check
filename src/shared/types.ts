@@ -37,6 +37,32 @@ export interface LatestFilesResult {
   skippedEntries: number
 }
 
+export type LaunchSource = 'Running processes' | 'Security 4688' | 'Sysmon 1'
+
+export interface ProcessLaunch {
+  name: string
+  path: string
+  pid: number
+  startedAt: number
+  sources: LaunchSource[]
+  state: 'running' | 'not-running' | 'unknown'
+}
+
+export interface LaunchLogStatus {
+  source: LaunchSource
+  status: 'available' | 'empty' | 'unavailable' | 'limited'
+  message: string
+}
+
+export interface UnturnedLaunchResult {
+  checkedAt: number
+  game: ProcessLaunch | null
+  windowStart: number | null
+  processes: ProcessLaunch[]
+  logs: LaunchLogStatus[]
+  warnings: string[]
+}
+
 // Scanner metadata
 export interface ScannerInfo {
   id: string
@@ -85,6 +111,7 @@ export interface ScannerCapability {
 
 // IPC Channel names
 export const IPC_CHANNELS = {
+  UNTURNED_LAUNCHES: 'unturned:launches',
   LATEST_FILES_SELECT: 'latest-files:select',
   LATEST_FILES_REFRESH: 'latest-files:refresh',
   // Scan operations

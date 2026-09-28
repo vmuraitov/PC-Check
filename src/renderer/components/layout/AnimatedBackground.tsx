@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import { useSettingsStore } from '../../stores/settings-store'
 import { useScanStore } from '../../stores/scan-store'
 import { useLatestFilesStore } from '../../stores/latest-files-store'
+import { useUnturnedLaunchesStore } from '../../stores/unturned-launches-store'
 
 // Single pastel palette — the only color set in the app
 const palette = {
@@ -37,9 +38,10 @@ export function AnimatedBackground() {
   const effectsEnabled = useSettingsStore(state => state.effectsEnabled)
   const scanStatus = useScanStore(state => state.status)
   const latestFilesBusy = useLatestFilesStore(state => state.busy)
+  const unturnedLaunchesBusy = useUnturnedLaunchesStore(state => state.busy)
 
   // While scanning, freeze motion entirely to save CPU/GPU.
-  const animated = effectsEnabled && scanStatus !== 'scanning' && !latestFilesBusy
+  const animated = effectsEnabled && scanStatus !== 'scanning' && !latestFilesBusy && !unturnedLaunchesBusy
 
   return (
     <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">

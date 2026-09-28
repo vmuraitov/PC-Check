@@ -69,6 +69,16 @@ const navItems: NavItem[] = [
     labelKey: 'nav.latestFiles'
   },
   {
+    path: '/unturned-launches',
+    icon: (
+      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <rect x="3" y="3" width="18" height="18" rx="3" strokeWidth={1.5} />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 8h10M7 12h4m-4 4h4m5-4v3l2 1" />
+      </svg>
+    ),
+    labelKey: 'nav.unturnedLaunches'
+  },
+  {
     path: '/manual',
     icon: (
       <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">

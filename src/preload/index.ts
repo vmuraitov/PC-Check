@@ -1,7 +1,7 @@
 import { contextBridge, ipcRenderer } from 'electron'
 import { IPC_CHANNELS, ScanResult, ScanProgress, UserSettings, ScannerInfo, OsInfo, ScannerCapability } from '../shared/types'
 import { ScannerName } from '../main/scanners'
-import type { LatestFilesResult } from '../shared/types'
+import type { LatestFilesResult, UnturnedLaunchResult } from '../shared/types'
 
 export type ScanProgressCallback = (progress: ScanProgress) => void
 export type ScanResultCallback = (result: ScanResult) => void
@@ -9,6 +9,8 @@ export type ScanCompleteCallback = (results: ScanResult[]) => void
 export type ScanErrorCallback = (error: { message: string }) => void
 
 const api = {
+  getUnturnedLaunches: (): Promise<UnturnedLaunchResult> =>
+    ipcRenderer.invoke(IPC_CHANNELS.UNTURNED_LAUNCHES),
   selectLatestFilesFolder: (limit = 2): Promise<LatestFilesResult | null> =>
     ipcRenderer.invoke(IPC_CHANNELS.LATEST_FILES_SELECT, limit),
   refreshLatestFiles: (limit = 2): Promise<LatestFilesResult> =>

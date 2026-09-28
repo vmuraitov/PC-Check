@@ -1,5 +1,6 @@
 import { ipcMain, shell, app, BrowserWindow, dialog } from 'electron'
 import { findLatestFiles } from './services/latest-files'
+import { findUnturnedLaunches } from './services/unturned-launches'
 import { IPC_CHANNELS, ScanResult, ScanProgress, UserSettings, ScannerInfo, OsInfo, ScannerCapability } from '../shared/types'
 import { logger } from './services/logger'
 import { writeFileSync } from 'fs'
@@ -91,6 +92,20 @@ export function setupIpcHandlers(mainWindow: BrowserWindow): void {
   const scannerFactory = getScannerFactory()
   let latestFilesFolder: string | null = null
   let latestFilesBusy = false
+  let unturnedLaunchesBusy = false
+
+  ipcMain.handle(IPC_CHANNELS.UNTURNED_LAUNCHES, async (event) => {
+    if (event.sender !== mainWindow.webContents || event.senderFrame !== mainWindow.webContents.mainFrame) {
+      throw new Error('Invalid request source.')
+    }
+    if (unturnedLaunchesBusy) throw new Error('A launch history search is already in progress.')
+    unturnedLaunchesBusy = true
+    try {
+      return await findUnturnedLaunches()
+    } finally {
+      unturnedLaunchesBusy = false
+    }
+  })
 
   const scanLatestFiles = async (event: Electron.IpcMainInvokeEvent, choose: boolean, requestedLimit: unknown) => {
     if (event.sender !== mainWindow.webContents || event.senderFrame !== mainWindow.webContents.mainFrame) {
